@@ -49,21 +49,173 @@ void print_menu();
 
 
 //==============================================
-//          build_list_with_3_nodes
-//==============================================
 void  build_list_with_3_nodes(Node*& head)
-{
-	cout << "build_list_with_3_nodes_tail" << " *** Not Implemented Yet ***" << endl;
-}
+{	// הכנסת איברים בראש הרשימה
+	cout << "build_list_with_3_nodes_tail"  << endl;
 
-//==============================================
-//          print_list
-//==============================================
-void  print_list(const Node* head)
-{
-	cout << "print_list" << " *** Not Implemented Yet ***" << endl;
-}
+	Node* temp;
 
+	temp = new Node();
+	temp->data = 3;
+	temp->next = head;
+	head = temp;
+
+	temp = new Node();
+	temp->data = 2;
+	temp->next = head;
+	head = temp;
+
+	temp = new Node();
+	temp->data = 1;
+	temp->next = head;
+	head = temp;
+}
+//==============================================
+void  print_list(Node* head)
+{
+	cout << "print_list"  << endl;
+
+	Node* temp;
+	temp = head;
+	while (temp)
+	{
+		cout << temp->data << ' ';
+		temp = temp->next;
+	}
+}
+//==============================================
+void build_list_with_3_nodes_tail(Node*& head)
+{// הכנסת איברים לסוף הרשימה
+	head = new Node();
+	head->data = 1;
+
+	head->next = new Node();
+	head->next->data = 2;
+
+	head->next->next = new Node();
+	head->next->next->data = 3;
+
+	head->next->next->next = nullptr;
+}
+//==============================================
+void insert_front(Node*& head, int data)
+{
+	Node* temp = new Node();
+	temp->data = data;
+	temp->next = head;
+	head = temp;
+}
+//----------------------------------------------
+void build_list_front(Node*& head)
+{
+	int num;
+	cin >> num;
+	while (num != 0)
+	{
+		insert_front(head, num);
+		cin >> num;
+	}
+}
+//==============================================
+void insert_list_rear(Node*& head, Node*& tail, int num)
+{
+	Node* temp = new Node();
+	temp->data = num;
+	temp->next = nullptr;
+	if (head == nullptr)
+	{
+		head = tail = temp;
+	}
+	else
+	{
+		tail->next = temp;
+		tail = temp;
+	}
+}
+//----------------------------------------------
+void build_list_rear(Node*& head)
+{
+	Node* tail = nullptr;
+	int num;
+	cin >> num;
+	while (num != 0)
+	{
+		insert_list_rear(head, tail, num);
+		cin >> num;
+	}
+}
+//==============================================
+void insert_in_between(Node* head)
+{
+	Node* temp = head;
+
+	while (temp!=nullptr && temp->next != nullptr)
+	{
+		Node* newNode = new Node();
+		newNode->data = 99;
+		newNode->next = temp->next;
+		temp->next = newNode;
+		temp = newNode->next;
+	}
+}
+//==============================================
+bool delete_node(Node*& head, int val)
+{
+	if (head == nullptr) // if there are no members in the list
+		return false;
+
+	if (head->data == val) // if need to delete the first member
+	{
+		Node* temp = head;
+		head = head->next; // equal: head = temp->next;
+		delete temp;
+		return true;
+	}
+
+	Node* front = head; 
+	Node* rear = head->next;
+
+	while (front)
+	{
+		if (front->data == val) // if the requested member is found
+			break;
+		
+		// if the requested member is not found, we will advance the pointers to the next member.
+		rear = front;
+		front = front->next;
+	}
+
+	// if found the requested member in the while loop, and stopped the program, then the value of "front" is not "nullptr
+	if (front)
+	{
+		rear->next = front->next;
+		delete front;
+		return true;
+	}
+
+	// if not founded the requested member (=it not exist in linked list)
+	return false;
+
+}
+//----------------------------------------------
+bool delete_node(Node*& head)
+{
+	int val;
+	cin >> val;
+	return delete_node(head, val);
+}
+//==============================================
+void free_list(Node*& head)
+{
+	Node* temp;
+
+	while (head)
+	{
+		temp = head;
+		head = head->next;
+		delete temp;
+	}
+}
 //==============================================
 //              terminate
 //==============================================
@@ -103,7 +255,7 @@ void print_menu()
 //==============================================
 int main()
 {
-	Node* head;
+	Node* head = nullptr;
 	int option;
 
 	while (true)
@@ -118,19 +270,21 @@ int main()
 			print_list(head);
 			break;
 		case 3:
-			cout << "build_list_with_3_nodes_tail" << " *** Not Implemented Yet ***" << endl;
+			build_list_with_3_nodes_tail(head);
 			break;
 		case 4:
-			cout << "build_list_front" << " *** Not Implemented Yet ***" << endl;
+			build_list_front(head);
 			break;
 		case 5:
-			cout << "build_list_at_tail" << " *** Not Implemented Yet ***" << endl;
+			build_list_rear(head);
 			break;
 		case 6:
-			cout << "insert_in_between" << " *** Not Implemented Yet ***" << endl;
+			build_list_rear(head);
+			insert_in_between(head);
 			break;
 		case 7:
-			cout << "delete_node" << " *** Not Implemented Yet ***" << endl;
+			build_list_rear(head);
+			cout << delete_node(head);
 			break;
 		case 8:
 			cout << "switch_pairs" << " *** Not Implemented Yet ***" << endl;
@@ -144,10 +298,13 @@ int main()
 		case 11:
 			cout << "delete_list" << " *** Not Implemented Yet ***" << endl;
 			break;
+		case 0:
 		case -1: cout << "Going to Exit.. bye" << endl;
 			exit(0);
 		default: cout << "wrong option. Select again. " << endl;
 		}
 		cout << endl;
-	}
+		free_list(head);
+	 	}
+	
 }
