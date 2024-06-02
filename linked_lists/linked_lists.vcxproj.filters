@@ -18,7 +18,7 @@
     <ClCompile Include="linked_lists.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Assim_linked_lists.cc">
+    <ClCompile Include="lists_Hanan_Gershon_Cohen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

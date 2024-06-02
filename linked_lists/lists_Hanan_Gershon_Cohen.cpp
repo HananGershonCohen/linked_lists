@@ -31,7 +31,7 @@ struct Node
 void terminate(char* msg, int code);
 void build_list_with_3_nodes(Node*& head);
 void print_list(const Node* head);
-void probe_allocation(Node* pointer);
+//void probe_allocation(Node* pointer);
 void build_list_with_3_nodes_tail(Node*& head);
 void build_list_front(Node*& head);
 void insert_front(Node*& head, int data);
@@ -41,18 +41,14 @@ void insert_in_between(Node* head);
 bool delete_node(Node*& head);
 bool delete_node(Node*& head, int val);
 void switch_pairs(Node*& head);
-void add_my_neighbours(Node* head);
+void add_my_neighbours(Node*& head);
 void palindromeize_list(Node*& head);
 
 void print_menu();
 
-
-
 //==============================================
 void  build_list_with_3_nodes(Node*& head)
 {	// הכנסת איברים בראש הרשימה
-	cout << "build_list_with_3_nodes_tail"  << endl;
-
 	Node* temp;
 
 	temp = new Node();
@@ -73,7 +69,7 @@ void  build_list_with_3_nodes(Node*& head)
 //==============================================
 void  print_list(Node* head)
 {
-	cout << "print_list"  << endl;
+	//cout << "print_list"  << endl;
 
 	Node* temp;
 	temp = head;
@@ -205,16 +201,91 @@ bool delete_node(Node*& head)
 	return delete_node(head, val);
 }
 //==============================================
-void free_list(Node*& head)
+void switch_pairs(Node*& head) {
+	if (!head || !head->next) // אם הרשימה ריקה או אם יש רק איבר אחד ברשימה
+		return;
+
+	Node* rear = nullptr;
+	Node* curr = head;
+	Node* front = nullptr;
+
+	// חילוף ראשוני בין הראש לזוג הבא
+	head = curr->next;
+	while (curr && curr->next)
+	{
+		// חלק ההחלפה
+		front = curr->next;
+		curr->next = front->next;
+		front->next = curr;
+
+		// שקר באיטרציה הראשונה 
+		if (rear)
+		{
+			rear->next = front;
+		}
+
+		// ניווט המצביעים
+		rear = curr;
+		curr = curr->next;
+	}
+}
+//==============================================
+void add_my_neighbours(Node*& head)
+{
+	if (!head || !head->next) // אם הרשימה ריקה או אם יש רק איבר אחד ברשימה
+		return;
+
+	Node* rear = head;
+	Node* mid = rear->next;
+	int temp = mid->data;
+	int val = rear->data;
+
+	while (mid->next)
+	{
+		mid->data = val + mid->next->data;
+		rear = rear->next;
+		mid = mid->next;
+		val = temp;
+		temp = mid->data;
+	}
+}
+//==============================================
+void value_init(Node*& newNode,Node* rear,Node* front)
+{
+	newNode->data = front->data;
+	newNode->next = rear;
+}
+//==============================================
+void palindromeize_list(Node*& head)
+{
+	if (!head)
+		return;
+
+	Node* rear = head;
+	Node* front = rear->next;
+
+	while (front)
+	{
+		Node* newNode = new Node();
+		value_init(newNode,rear,front);
+		head = newNode;
+		rear = newNode;
+		front = front->next;
+	}
+}
+//==============================================
+void delete_list(Node*& head)
 {
 	Node* temp;
 
 	while (head)
-	{
+	{ 
 		temp = head;
 		head = head->next;
 		delete temp;
 	}
+
+	delete head;
 }
 //==============================================
 //              terminate
@@ -265,6 +336,7 @@ int main()
 		switch (option) {
 		case 1:
 			build_list_with_3_nodes(head);
+			print_list(head);
 			break;
 		case 2:
 			print_list(head);
@@ -283,20 +355,19 @@ int main()
 			insert_in_between(head);
 			break;
 		case 7:
-			build_list_rear(head);
 			cout << delete_node(head);
 			break;
 		case 8:
-			cout << "switch_pairs" << " *** Not Implemented Yet ***" << endl;
+			switch_pairs(head);
 			break;
 		case 9:
-			cout << "add_my_neighbours" << " *** Not Implemented Yet ***" << endl;
+			add_my_neighbours(head);
 			break;
 		case 10:
-			cout << "palindromize_list" << " *** Not Implemented Yet ***" << endl;
+			palindromeize_list(head);
 			break;
 		case 11:
-			cout << "delete_list" << " *** Not Implemented Yet ***" << endl;
+			delete_list(head);
 			break;
 		case 0:
 		case -1: cout << "Going to Exit.. bye" << endl;
@@ -304,7 +375,6 @@ int main()
 		default: cout << "wrong option. Select again. " << endl;
 		}
 		cout << endl;
-		free_list(head);
 	 	}
 	
 }
