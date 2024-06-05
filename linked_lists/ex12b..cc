@@ -62,9 +62,34 @@ void print_list(Node* head)
     cout << endl;
 }
 
+Node* print_current_and_move_to_next(Node* head)
+{
+    Node* temp = head;
+    cout << head->_id << ' ';
+
+    if (head->_jump >= 0)
+    {
+        for (int i = 0; i < head->_jump; i++)
+            temp = temp->_next;
+    }
+    else
+    {
+        for (int i = head->_jump; i > 0; i++)
+            temp = temp->_prev;
+    }
+
+    return temp;
+}
+
 void print_list(Node* head, string str)
 {
-
+    Node* temp = head; // "temp" is pointer to the member we are in
+    int  counter = 0; 
+    while (counter < 15)
+    {
+        temp = print_current_and_move_to_next(temp);
+        counter++;
+    }
 }
 
 int main()
