@@ -110,10 +110,9 @@ int main()
 
 
     insert(head); // מעביר את הזרם לפונקציה insert
-    //print_list(head); // print all list
+    print_list(head); // print all list
     print_list(head, "ex_b"); // print according to EX. B.
     delete_list(head);
-
 
     return 0;
 }
