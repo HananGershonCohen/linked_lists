@@ -21,5 +21,8 @@
     <ClCompile Include="lists_Hanan_Gershon_Cohen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ex12b..cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
