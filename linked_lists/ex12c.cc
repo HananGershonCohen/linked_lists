@@ -64,6 +64,9 @@ Node* build_ds(ifstream& input)
 
 void print_ds(Node* my_ds)
 {
+    if (!my_ds)
+        return;
+
     Node* temp = nullptr;
     while (my_ds)
     {
@@ -78,22 +81,33 @@ void print_ds(Node* my_ds)
     }
 }
 
-void thread_wanted(Node* current, Node*& pointer_wanted)
+void thread_wanted(Node* current, Node*& head_wanted, Node*& temp_head_wanted)
 {
 
     cout << "START thread_wanted" << endl;
-    if (!pointer_wanted)
-        pointer_wanted = current;
+    if (!head_wanted)
+    {
+        head_wanted = current;
+        temp_head_wanted = head_wanted;
+    }
     else
-        pointer_wanted->_down = current;
+    {
+        temp_head_wanted->_down = current;
+        temp_head_wanted = current;
+    }
+
 }
 
 // הפונקציה שמשרשרת את האיברים המבוקשים לא פועלת כראוי
 void link_wanted(Node* my_ds, int wanted)
 {
+    if (!my_ds)
+        return;
+
     cout << "START link_wanted" << endl;
     Node* current = nullptr;
-    Node* pointer_wanted = nullptr;
+    Node* head_wanted = nullptr;
+    Node* temp_head_wanted = nullptr;
 
     while (my_ds)
     {
@@ -104,7 +118,7 @@ void link_wanted(Node* my_ds, int wanted)
 
             if (current->_data == wanted)
             {
-                thread_wanted(current, pointer_wanted);
+                thread_wanted(current, head_wanted, temp_head_wanted);
                 break; // כיוון שבכל שורה לא יכול להיות שישנם 2 איברים דומים לכן ניתן עכשיו לעצור את המשך החיפוש לשורה הזאת
             }
             current = current->_right;
@@ -122,7 +136,10 @@ void print_pointer_wanted(Node* current)
         return;
 
     if (temp->_right)
+    {
+        temp = temp->_right;
         cout << temp->_data << ' ';
+    }
     else
         cout << '0' << ' ';
 
@@ -131,6 +148,9 @@ void print_pointer_wanted(Node* current)
 
 void print_wanted(Node* my_ds, int wanted)
 {
+    if (!my_ds)
+        return;
+
     Node* current = nullptr;
     cout << "START print_wanted" << endl;
 
@@ -152,6 +172,28 @@ void print_wanted(Node* my_ds, int wanted)
         }
         my_ds = my_ds->_down;
     }
+}
+
+void free_ds(Node*& my_ds)
+{
+    if (!my_ds)
+        return;
+
+    while (my_ds)
+    {
+        Node* tempRow = my_ds;
+        my_ds = my_ds->_down;
+
+        while (tempRow)
+        {
+            Node* current = tempRow;
+            tempRow = tempRow->_right;
+            delete current;
+        }
+
+    }
+    
+    my_ds = nullptr;
 }
 
 
@@ -179,7 +221,7 @@ int main()
 
     input.close();
 
-    //free_ds(my_ds);
+    free_ds(my_ds);
 
     return EXIT_SUCCESS;
 }
