@@ -1,6 +1,6 @@
 //===============================================================
 // List Assimilation Exercise
-// Student Name: 
+// Student Name: HananGCohen
 // Date:
 // 
 // Special comments:
@@ -48,7 +48,7 @@ void print_menu();
 
 //==============================================
 void  build_list_with_3_nodes(Node*& head)
-{	// äëðñú àéáøéí áøàù äøùéîä
+{	// Ã¤Ã«Ã°Ã±Ãº Ã Ã©Ã¡Ã¸Ã©Ã­ Ã¡Ã¸Ã Ã¹ Ã¤Ã¸Ã¹Ã©Ã®Ã¤
 	Node* temp;
 
 	temp = new Node();
@@ -81,7 +81,7 @@ void  print_list(Node* head)
 }
 //==============================================
 void build_list_with_3_nodes_tail(Node*& head)
-{// äëðñú àéáøéí ìñåó äøùéîä
+{// Ã¤Ã«Ã°Ã±Ãº Ã Ã©Ã¡Ã¸Ã©Ã­ Ã¬Ã±Ã¥Ã³ Ã¤Ã¸Ã¹Ã©Ã®Ã¤
 	head = new Node();
 	head->data = 1;
 
@@ -202,29 +202,29 @@ bool delete_node(Node*& head)
 }
 //==============================================
 void switch_pairs(Node*& head) {
-	if (!head || !head->next) // àí äøùéîä øé÷ä àå àí éù ø÷ àéáø àçã áøùéîä
+	if (!head || !head->next) // Ã Ã­ Ã¤Ã¸Ã¹Ã©Ã®Ã¤ Ã¸Ã©Ã·Ã¤ Ã Ã¥ Ã Ã­ Ã©Ã¹ Ã¸Ã· Ã Ã©Ã¡Ã¸ Ã Ã§Ã£ Ã¡Ã¸Ã¹Ã©Ã®Ã¤
 		return;
 
 	Node* rear = nullptr;
 	Node* curr = head;
 	Node* front = nullptr;
 
-	// çéìåó øàùåðé áéï äøàù ìæåâ äáà
+	// Ã§Ã©Ã¬Ã¥Ã³ Ã¸Ã Ã¹Ã¥Ã°Ã© Ã¡Ã©Ã¯ Ã¤Ã¸Ã Ã¹ Ã¬Ã¦Ã¥Ã¢ Ã¤Ã¡Ã 
 	head = curr->next;
 	while (curr && curr->next)
 	{
-		// çì÷ ääçìôä
+		// Ã§Ã¬Ã· Ã¤Ã¤Ã§Ã¬Ã´Ã¤
 		front = curr->next;
 		curr->next = front->next;
 		front->next = curr;
 
-		// ù÷ø áàéèøöéä äøàùåðä 
+		// Ã¹Ã·Ã¸ Ã¡Ã Ã©Ã¨Ã¸Ã¶Ã©Ã¤ Ã¤Ã¸Ã Ã¹Ã¥Ã°Ã¤ 
 		if (rear)
 		{
 			rear->next = front;
 		}
 
-		// ðéååè äîöáéòéí
+		// Ã°Ã©Ã¥Ã¥Ã¨ Ã¤Ã®Ã¶Ã¡Ã©Ã²Ã©Ã­
 		rear = curr;
 		curr = curr->next;
 	}
@@ -232,7 +232,7 @@ void switch_pairs(Node*& head) {
 //==============================================
 void add_my_neighbours(Node*& head)
 {
-	if (!head || !head->next) // àí äøùéîä øé÷ä àå àí éù ø÷ àéáø àçã áøùéîä
+	if (!head || !head->next) // Ã Ã­ Ã¤Ã¸Ã¹Ã©Ã®Ã¤ Ã¸Ã©Ã·Ã¤ Ã Ã¥ Ã Ã­ Ã©Ã¹ Ã¸Ã· Ã Ã©Ã¡Ã¸ Ã Ã§Ã£ Ã¡Ã¸Ã¹Ã©Ã®Ã¤
 		return;
 
 	Node* rear = head;
